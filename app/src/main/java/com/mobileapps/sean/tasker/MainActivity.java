@@ -16,8 +16,6 @@ public class MainActivity extends ListActivity {
     * TODO      implement load from text file (at least 3 tasks)
     * TODO      add action bar + add task button (write to serializable file)
     * TODO      SharedPreferences, add TaskActivity for each task
-    * TODO      add 'Change Task due date' + 'Share' buttons to TaskActivity
-    * TODO      add extra feature chosen by me (not decided yet)
     */
 
 
