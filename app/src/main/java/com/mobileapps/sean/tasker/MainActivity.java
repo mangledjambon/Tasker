@@ -25,17 +25,24 @@ public class MainActivity extends ListActivity {
 
     private ListView taskList;
     private boolean loaded;
+    private TaskController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //file is not loaded
         loaded = false;
 
+        // get singleton instance of controller
+        controller = TaskController.getInstance();
+
+        // if loadFromFile returns true, then data is loaded, so fill the list
         if (loadFromFile(this))
             loaded = fillList();
 
+        // if the list is loaded, display a message describing what happened
         if (loaded)
             displayToast("Tasks loaded successfully.");
         else
@@ -67,9 +74,9 @@ public class MainActivity extends ListActivity {
 
     public boolean loadFromFile(Context context) {
 
-        InputStream in = context.getResources().openRawResource(R.raw.tasks);
-        StringTokenizer st = new StringTokenizer(in.toString(), "#");
-        System.out.println(st);
+        //InputStream in = context.getResources().openRawResource(R.raw.tasks);
+        //StringTokenizer st = new StringTokenizer(in.toString(), "#");
+        //System.out.println(st);
 
         return true;
     }
