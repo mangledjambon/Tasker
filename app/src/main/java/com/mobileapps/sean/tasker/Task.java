@@ -25,8 +25,6 @@ public class Task {
         return taskDescription;
     }
 
-    public long getTaskDate() {
-        return taskDueDate;
-    }
+    public long getTaskDate() { return taskDueDate; }
 
 }
