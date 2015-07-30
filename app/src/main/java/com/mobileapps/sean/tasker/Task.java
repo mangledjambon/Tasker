@@ -27,4 +27,10 @@ public class Task {
 
     public long getTaskDate() { return taskDueDate; }
 
+    public void setDueDate(long newDateInMillis) {
+
+        taskDueDate = newDateInMillis;
+
+    }
+
 }

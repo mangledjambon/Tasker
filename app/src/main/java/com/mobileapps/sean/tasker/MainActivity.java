@@ -2,12 +2,16 @@ package com.mobileapps.sean.tasker;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.io.InputStream;
+import java.util.StringTokenizer;
 
 
 public class MainActivity extends ListActivity {
@@ -29,7 +33,7 @@ public class MainActivity extends ListActivity {
 
         loaded = false;
 
-        if (loadFromFile())
+        if (loadFromFile(this))
             loaded = fillList();
 
         if (loaded)
@@ -61,7 +65,12 @@ public class MainActivity extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean loadFromFile() {
+    public boolean loadFromFile(Context context) {
+
+        InputStream in = context.getResources().openRawResource(R.raw.tasks);
+        StringTokenizer st = new StringTokenizer(in.toString(), "#");
+        System.out.println(st);
+
         return true;
     }
 
