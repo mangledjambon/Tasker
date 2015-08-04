@@ -3,23 +3,27 @@ package com.mobileapps.sean.tasker;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.StringTokenizer;
 
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends ActionBarActivity {
 
     /*
-    * TODO      implement load from text file (at least 3 tasks)
-    * TODO      add action bar + add task button (write to serializable file)
-    * TODO      SharedPreferences, add TaskActivity for each task
+    * TODO      write new task to serializable file
+    * TODO      TaskActivity for each task
     */
 
 
@@ -38,16 +42,20 @@ public class MainActivity extends ListActivity {
         // get singleton instance of controller
         controller = TaskController.getInstance();
 
+        taskList = (ListView) findViewById(R.id.list);
+
         // if loadFromFile returns true, then data is loaded, so fill the list
-        if (loadFromFile(this))
+        if (loadFromFile(this)) {
             loaded = fillList();
+        }
 
-        // if the list is loaded, display a message describing what happened
-        if (loaded)
-            displayToast("Tasks loaded successfully.");
-        else
+        // if the list is loaded, display a message with num of tasks due this week
+        if (loaded) {
+            setListViewOnItemClickListener(taskList);
+            addSharedPreferences();
+        } else {
             displayToast("Something happened. Tasks could not be loaded.");
-
+        }
     }
 
     @Override
@@ -68,21 +76,22 @@ public class MainActivity extends ListActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == R.id.action_newtask) {
+            // add new task
+            displayToast("Coming soon!");
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
     public boolean loadFromFile(Context context) {
 
-        //InputStream in = context.getResources().openRawResource(R.raw.tasks);
-        //StringTokenizer st = new StringTokenizer(in.toString(), "#");
-        //System.out.println(st);
-
-        return true;
+        return controller.loadFromFile(this);
     }
 
     public boolean  fillList() {
-        return true;
+        return controller.fillList(this, taskList);
     }
 
     public void displayToast(String message) {
@@ -90,6 +99,31 @@ public class MainActivity extends ListActivity {
         Toast toast = Toast.makeText(getApplicationContext(), (CharSequence) message, Toast.LENGTH_SHORT);
         toast.show();
 
+    }
+
+    public void addSharedPreferences() {
+
+        SharedPreferences prefs = getSharedPreferences("MainActivity", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putString("message", "You have " + controller.getNumTasksDueThisWeek() + " tasks due this week.");
+        editor.apply();
+
+        displayToast(prefs.getString("message", "No tasks found."));
+    }
+
+    public void setListViewOnItemClickListener(ListView lv) {
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent taskActivity = new Intent(MainActivity.this, TaskActivity.class);
+                taskActivity.putExtra("task", controller.getTask(position));
+                startActivity(taskActivity);
+
+            }
+        });
     }
 
 }

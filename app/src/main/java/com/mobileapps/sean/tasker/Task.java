@@ -1,9 +1,15 @@
 package com.mobileapps.sean.tasker;
 
+import android.text.format.DateFormat;
+
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by sean on 30/07/15.
  */
-public class Task {
+public class Task implements Serializable{
 
     private String taskDescription;
     private String taskTitle;
@@ -25,11 +31,26 @@ public class Task {
         return taskDescription;
     }
 
-    public long getTaskDate() { return taskDueDate; }
+    public String getDueDate() {
+
+        String dateString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(taskDueDate));
+        return dateString;
+
+    }
+
+    public long getDueDateInMillis() {
+        return taskDueDate;
+    }
 
     public void setDueDate(long newDateInMillis) {
 
         taskDueDate = newDateInMillis;
+
+    }
+
+    public String toString() {
+
+        return getTitle() + "\nDue: " + getDueDate();
 
     }
 
