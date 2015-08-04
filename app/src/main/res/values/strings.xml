@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Tasker</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_task">TaskActivity</string>
+    <string name="action_add">Add Task</string>
+
+</resources>
