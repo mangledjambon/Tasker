@@ -1,10 +1,7 @@
 package com.mobileapps.sean.tasker;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -51,38 +48,40 @@ public class TaskController {
 
     public boolean loadFromFile(Context c) {
 
-        InputStream in = c.getResources().openRawResource(R.raw.tasks);
+        if (tasks.size() == 0) {
 
-        if (in != null) {
+            InputStream in = c.getResources().openRawResource(R.raw.tasks);
 
-            InputStreamReader inputReader = new InputStreamReader(in);
-            BufferedReader bufferedReader = new BufferedReader(inputReader);
+            if (in != null) {
 
-            try {
+                InputStreamReader inputReader = new InputStreamReader(in);
+                BufferedReader bufferedReader = new BufferedReader(inputReader);
 
-                String line;
+                try {
 
-                while ((line = bufferedReader.readLine()) != null) {
+                    String line;
 
-                    String[] item;
-                    item = TextUtils.split(line, "#");
-                    Task task = new Task(item[0], item[1], Long.parseLong(item[2]));
+                    while ((line = bufferedReader.readLine()) != null) {
 
-                    if (tasks == null) {
-                        tasks = new ArrayList<Task>();
+                        String[] item;
+                        item = TextUtils.split(line, "#");
+                        Task task = new Task(item[0], item[1], Long.parseLong(item[2]));
+
+                        if (tasks == null) {
+                            tasks = new ArrayList<Task>();
+                        }
+
+                        tasks.add(task);
                     }
 
-                    tasks.add(task);
+                    return true;
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
                 }
-
-                return true;
-
-            } catch (IOException e) {
-                e. printStackTrace();
-                return false;
             }
         }
-
         return false;
     }
 

@@ -1,8 +1,10 @@
 package com.mobileapps.sean.tasker;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
@@ -24,6 +26,13 @@ public class MainActivity extends ActionBarActivity {
     /*
     * TODO      write new task to serializable file
     * TODO      TaskActivity for each task
+    *
+    *       requirement #1 - DONE
+    *       requirement #2 - 50% -> need to complete writing new tasks
+    *       requirement #3 - DONE
+    *       requirement #4 - NOT DONE -> need to display details of task
+    *                                 -> change task due date
+    *                                 -> share button
     */
 
 
@@ -77,8 +86,26 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         else if (id == R.id.action_newtask) {
+
             // add new task
-            displayToast("Coming soon!");
+            new AlertDialog.Builder(this)
+                    .setTitle("Create task")
+                    .setMessage("Create new task?")
+                    .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //displayToast("Creating new task...");
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //do nothing
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_input_add)
+                    .show();
+
             return true;
         }
 
@@ -86,7 +113,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public boolean loadFromFile(Context context) {
-
         return controller.loadFromFile(this);
     }
 

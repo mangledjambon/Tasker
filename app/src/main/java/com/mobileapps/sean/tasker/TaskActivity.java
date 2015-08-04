@@ -10,7 +10,7 @@ public class TaskActivity extends ActionBarActivity {
 
     /*
     * TODO        display Task details
-    * TODO        add 'Change Task due date' + 'Share' buttons to TaskActivity
+    * TODO        add 'Change Task due date' using date picker + 'Share' buttons to TaskActivity
     * TODO        add extra feature chosen by me (not decided yet)
     */
 
@@ -18,6 +18,9 @@ public class TaskActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
+
+        Bundle bundle = getIntent().getExtras();
+
     }
 
     @Override
