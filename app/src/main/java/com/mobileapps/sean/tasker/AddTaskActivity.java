@@ -1,7 +1,6 @@
 package com.mobileapps.sean.tasker;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -69,7 +68,7 @@ public class AddTaskActivity extends ActionBarActivity {
 
                             int day, month, year;
                             day = datePicker.getDayOfMonth();
-                            month = datePicker.getMonth();
+                            month = datePicker.getMonth() + 1;
                             year = datePicker.getYear();
 
                             String dateStr = day + "/" + month + "/" + year;
