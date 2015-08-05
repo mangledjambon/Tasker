@@ -1,10 +1,6 @@
 package com.mobileapps.sean.tasker;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
@@ -15,10 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.io.InputStream;
-import java.util.Calendar;
-import java.util.StringTokenizer;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -87,24 +79,8 @@ public class MainActivity extends ActionBarActivity {
         }
         else if (id == R.id.action_newtask) {
 
-            // add new task
-            new AlertDialog.Builder(this)
-                    .setTitle("Create task")
-                    .setMessage("Create new task?")
-                    .setPositiveButton("Create", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //displayToast("Creating new task...");
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //do nothing
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_input_add)
-                    .show();
+            Intent intent = new Intent(this, AddTaskActivity.class);
+            startActivity(intent);
 
             return true;
         }
@@ -150,6 +126,10 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
+    }
+
+    public void refresh() {
+        taskList.invalidateViews();
     }
 
 }
