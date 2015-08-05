@@ -1,15 +1,16 @@
 package com.mobileapps.sean.tasker;
 
-import android.text.format.DateFormat;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by sean on 30/07/15.
  */
 public class Task implements Serializable{
+
+    static final long serialVersionUID = 971110374203763525L;
 
     private String taskDescription;
     private String taskTitle;
@@ -42,7 +43,14 @@ public class Task implements Serializable{
         return taskDueDate;
     }
 
-    public void setDueDate(long newDateInMillis) {
+    public void setDueDate(int day, int month, int year) {
+
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_MONTH, day);
+        c.add(Calendar.MONTH, month);
+        c.add(Calendar.YEAR, year);
+
+        long newDateInMillis = c.getTimeInMillis();
 
         taskDueDate = newDateInMillis;
 

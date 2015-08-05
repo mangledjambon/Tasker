@@ -6,9 +6,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -19,6 +24,7 @@ public class TaskController {
 
     private static TaskController instance;
     static ArrayList<Task> tasks;
+    private final String fileName = "tasks.ser";
 
     private TaskController() {
 
@@ -74,6 +80,18 @@ public class TaskController {
                         tasks.add(task);
                     }
 
+                    FileInputStream fis = c.openFileInput(fileName);
+
+                    while (fis.available() > 0) {
+                        ObjectInputStream ois = new ObjectInputStream(fis);
+                        try {
+                            Task task = (Task) ois.readObject();
+                            tasks.add(task);
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                     return true;
 
                 } catch (IOException e) {
@@ -115,5 +133,20 @@ public class TaskController {
 
         return tasks.get(index);
 
+    }
+
+    public void saveToFile(Context c, Task task) {
+
+        try {
+
+            FileOutputStream fos = c.openFileOutput(fileName, c.MODE_APPEND);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(task);
+            oos.close();
+            fos.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
